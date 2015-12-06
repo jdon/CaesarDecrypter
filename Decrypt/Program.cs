@@ -22,12 +22,38 @@ namespace Decrypt
             Application.Run(m);
         }
 
-        public static void WriteText(String text) {
+        public static void writeToConsole(String text)
+        {
             m.getTextBox().AppendText(text);
         }
 
-        public static Gui getGui() {
+        public static Gui getGui()
+        {
             return m;
+        }
+
+        public static bool isCoPrime(int a)
+        {
+            int b = 26;
+            while (a != 0 && b != 0)
+            {
+                if (a > b)
+                {
+                    a = a % b;
+                }
+                else
+                {
+                    b = b % a;
+                }
+            }
+            if (Math.Max(a, b) == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

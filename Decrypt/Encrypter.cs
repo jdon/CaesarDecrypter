@@ -16,7 +16,7 @@ namespace Decrypt
         }
 
 
-        public String EncryptCeaser(String Text, int Shift)
+        public String EncryptCaesar(String Text, int Shift)
         {
             String EncryptedText = "";
             foreach (char c in Text.ToLowerInvariant())
@@ -38,12 +38,31 @@ namespace Decrypt
                 }
             }
             //show output to TextBox on gui
-            Program.WriteText("\nInputed Text");
-            Program.WriteText("\n"+ Text);
-            Program.WriteText("\nEncrypted using a "+Shift+ " shift");
-            Program.WriteText("\n"+EncryptedText);
+            Program.writeToConsole("\nInputed Text");
+            Program.writeToConsole("\n"+ Text);
+            Program.writeToConsole("\nEncrypted using a "+Shift+ " shift");
+            Program.writeToConsole("\n"+EncryptedText);
             return EncryptedText;
         }
 
-}
+        public String encryptAffine(String Text, int a, int b) {
+            // A has to be a coprime of 26
+            // b is the magnitude of the shift so must between 0-25 
+            string EncryptedText = "";
+            Program.writeToConsole("\nInputed Text");
+            Program.writeToConsole("\n" + Text);
+            foreach (char c in Text.ToLowerInvariant())
+            {
+                if (c >= 97 && c <= 122)
+                {
+                    int x = c - 97;
+                    int AsciiCode = ((a * x + b) % 26) + 97;
+                    Char NewCharacter = (char)AsciiCode;
+                    EncryptedText = EncryptedText + NewCharacter;
+                }
+            }
+            Program.writeToConsole(EncryptedText);
+            return EncryptedText;
+        }
+    }
 }

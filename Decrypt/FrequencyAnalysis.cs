@@ -10,7 +10,6 @@ namespace Decrypt
     {
         private Dictionary<Char, int> CharacterCount = new Dictionary<Char, int>();
         private Dictionary<char, double> FrequencyTable = new Dictionary<char, double>();
-        
 
         private String EncryptedText;
 
@@ -30,6 +29,7 @@ namespace Decrypt
         public FrequencyAnalysis(String EncryptedText)
         {
             this.EncryptedText = EncryptedText;
+            CountCharacters();
         }
 
         private void PopulateFrequencyTable()
@@ -89,11 +89,11 @@ namespace Decrypt
                 var itemKey = item.Key;
                 var itemValue = item.Value;
                 Double percentage = (itemValue / NumberOfCharacter) * 100;
-                Console.Write("  " + itemKey + " " + itemValue + "\t" + percentage + "% \n");
+                Program.writeToConsole("  " + itemKey + " " + itemValue + "\t" + percentage + "% \n");
                 var amount = FrequencyTable.ElementAt(index);
                 var amountKey = amount.Key;
                 var amountValue = amount.Value;
-                Console.Write("  " + itemKey + " should be " + amountKey + "\n");
+                Program.writeToConsole("  " + itemKey + " should be " + amountKey + "\n");
             }
         }
 

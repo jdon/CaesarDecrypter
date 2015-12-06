@@ -32,6 +32,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.File = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decryptedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.encryptedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.caesarCipherToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,9 +44,6 @@
             this.advancedCipherToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.decryptedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.encryptedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,9 +90,33 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.decryptedTextToolStripMenuItem,
+            this.encryptedTextToolStripMenuItem});
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // decryptedTextToolStripMenuItem
+            // 
+            this.decryptedTextToolStripMenuItem.Name = "decryptedTextToolStripMenuItem";
+            this.decryptedTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.decryptedTextToolStripMenuItem.Text = "Decrypted Text";
+            this.decryptedTextToolStripMenuItem.Click += new System.EventHandler(this.decryptedTextToolStripMenuItem_Click);
+            // 
+            // encryptedTextToolStripMenuItem
+            // 
+            this.encryptedTextToolStripMenuItem.Name = "encryptedTextToolStripMenuItem";
+            this.encryptedTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.encryptedTextToolStripMenuItem.Text = "Encrypted Text";
+            this.encryptedTextToolStripMenuItem.Click += new System.EventHandler(this.encryptedTextToolStripMenuItem_Click);
             // 
             // runToolStripMenuItem1
             // 
@@ -124,6 +148,7 @@
             this.advancedCipherToolStripMenuItem1.Name = "advancedCipherToolStripMenuItem1";
             this.advancedCipherToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
             this.advancedCipherToolStripMenuItem1.Text = "Advanced Cipher ";
+            this.advancedCipherToolStripMenuItem1.Click += new System.EventHandler(this.advancedCipherToolStripMenuItem1_Click);
             // 
             // encryptToolStripMenuItem
             // 
@@ -146,6 +171,7 @@
             this.advancedCipherToolStripMenuItem2.Name = "advancedCipherToolStripMenuItem2";
             this.advancedCipherToolStripMenuItem2.Size = new System.Drawing.Size(168, 22);
             this.advancedCipherToolStripMenuItem2.Text = "Advanced Cipher ";
+            this.advancedCipherToolStripMenuItem2.Click += new System.EventHandler(this.advancedCipherToolStripMenuItem2_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -161,30 +187,6 @@
             this.clearConsoleToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.clearConsoleToolStripMenuItem.Text = "Clear Console";
             this.clearConsoleToolStripMenuItem.Click += new System.EventHandler(this.clearConsoleToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.decryptedTextToolStripMenuItem,
-            this.encryptedTextToolStripMenuItem});
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // decryptedTextToolStripMenuItem
-            // 
-            this.decryptedTextToolStripMenuItem.Name = "decryptedTextToolStripMenuItem";
-            this.decryptedTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.decryptedTextToolStripMenuItem.Text = "Decrypted Text";
-            this.decryptedTextToolStripMenuItem.Click += new System.EventHandler(this.decryptedTextToolStripMenuItem_Click);
-            // 
-            // encryptedTextToolStripMenuItem
-            // 
-            this.encryptedTextToolStripMenuItem.Name = "encryptedTextToolStripMenuItem";
-            this.encryptedTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.encryptedTextToolStripMenuItem.Text = "Encrypted Text";
-            this.encryptedTextToolStripMenuItem.Click += new System.EventHandler(this.encryptedTextToolStripMenuItem_Click);
             // 
             // Gui
             // 

@@ -59,7 +59,7 @@
             this.Controls.Add(this.MaskedTextBox);
             this.Controls.Add(this.Encrypt_Button);
             this.Name = "InputDialog";
-            this.Text = "InputDialog";
+            this.Text = "Caesar Cipher";
             this.ResumeLayout(false);
             this.PerformLayout();
 

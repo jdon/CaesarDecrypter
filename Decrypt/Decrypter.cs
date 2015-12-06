@@ -15,11 +15,45 @@ namespace Decrypt
 
         }
 
-        public string DecryptAffine() {
-            return null;
+        public string DecryptAffine(String EncryptedText)
+        {
+            String Loop = " ";
+            //loop throught all possible shifts
+            for (int a = 0; a < 26; a++)
+            {
+                if (Program.isCoPrime(a))
+                {
+                    for (int b = 0; b < 26; b++)
+                    {
+                        Loop = Loop + shiftaffine(EncryptedText,a,b);
+                    }
+
+                }
+            }
+            Program.writeToConsole(Loop);
+            return Loop;
         }
 
-        public String DecryptCeaser(String EncryptedText)
+        private string shiftaffine(String EncryptedText, int a, int b)
+        {
+            String DecryptedText = "\n\nCurrent shift: a " + a + " b "+b+"\n\n";
+            foreach (char c in EncryptedText.ToLowerInvariant())
+            {
+                int AsciiCode = (int)c;
+                if (AsciiCode >= 97 && AsciiCode <= 122)
+                {
+                    int x = c - 97;
+                    AsciiCode = ((a * x + b) % 26) + 97;
+                    Char NewCharacter = (char)AsciiCode;
+                    DecryptedText = DecryptedText + NewCharacter;
+                }
+            }
+            //show output to TextBox on gui
+            //Program.writeToConsole(DecryptedText);
+            return DecryptedText;
+        }
+
+        public String DecryptCaesar(String EncryptedText)
         {
             String Loop =" ";
             //loop throught all possible 26 shifts
@@ -30,7 +64,7 @@ namespace Decrypt
         }
 
         private String ShiftText(String EncryptedText,int Shift) {
-            String DecryptedText ="\n \n Current shift:"+Shift+"\n \n";
+            String DecryptedText ="\n\nCurrent shift:"+Shift+"\n\n";
             foreach (char c in EncryptedText.ToLowerInvariant())
             {
                 int AsciiCode = (int)c;
@@ -50,7 +84,7 @@ namespace Decrypt
                 }
             }
             //show output to TextBox on gui
-            Program.WriteText(DecryptedText);
+            Program.writeToConsole(DecryptedText);
             return DecryptedText;
         }
     }

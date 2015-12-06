@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AffineCipherInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AffineCipherInput.Designer.cs">
+      <DependentUpon>AffineCipherInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="Decrypter.cs" />
     <Compile Include="Encrypter.cs" />
     <Compile Include="FileProcessing.cs" />
@@ -64,6 +70,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AffineCipherInput.resx">
+      <DependentUpon>AffineCipherInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui.resx">
       <DependentUpon>Gui.cs</DependentUpon>
     </EmbeddedResource>

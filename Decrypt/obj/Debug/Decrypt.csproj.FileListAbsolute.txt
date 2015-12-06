@@ -8,3 +8,4 @@ c:\users\jdon\documents\visual studio 2015\Projects\Decrypt\Decrypt\obj\Debug\De
 c:\users\jdon\documents\visual studio 2015\Projects\Decrypt\Decrypt\obj\Debug\Decrypt.pdb
 C:\Users\jdon\Documents\Visual Studio 2015\Projects\Decrypt\Decrypt\obj\Debug\Decrypt.Gui.resources
 C:\Users\jdon\Documents\Visual Studio 2015\Projects\Decrypt\Decrypt\obj\Debug\Decrypt.InputDialog.resources
+C:\Users\jdon\Documents\Visual Studio 2015\Projects\Decrypt\Decrypt\obj\Debug\Decrypt.AffineCipherInput.resources

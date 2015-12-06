@@ -24,14 +24,29 @@ namespace Decrypt
             }
         }
 
-        public void WriteOutputFile(String DecryptedText,String FileLocation)
+        public void WriteDecryptedFile(String DecryptedText,String FileLocation)
         {
             try
             {
-                Program.WriteText(FileLocation);
+                Program.writeToConsole(FileLocation);
                 //write the output to the output location selected
-                File.WriteAllText(FileLocation+"/output.txt", DecryptedText);
+                File.WriteAllText(FileLocation+"/DecryptedText.txt", DecryptedText);
                 MessageBox.Show("File saved to "+ FileLocation + "\\output.txt", "File Saved Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception e)
+            {
+                //any exceptions show a error message on screen
+                MessageBox.Show(e.GetType().Name, e.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        public void WriteEncryptedFile(String DecryptedText, String FileLocation)
+        {
+            try
+            {
+                Program.writeToConsole(FileLocation);
+                //write the output to the output location selected
+                File.WriteAllText(FileLocation + "/DecryptedText.txt", DecryptedText);
+                MessageBox.Show("File saved to " + FileLocation + "\\output.txt", "File Saved Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception e)
             {
