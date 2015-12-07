@@ -113,7 +113,7 @@ namespace Decrypt
 
         private void advancedCipherToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Decrypt.DecryptAffine("czstr");
+            Decrypt.DecryptAffine(TextInput);
         }
 
         private void caesarCipherToolStripMenuItem2_Click(object sender, EventArgs e)

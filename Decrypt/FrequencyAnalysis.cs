@@ -8,28 +8,13 @@ namespace Decrypt
 {
     class FrequencyAnalysis
     {
-        private Dictionary<Char, int> CharacterCount = new Dictionary<Char, int>();
         private Dictionary<char, double> FrequencyTable = new Dictionary<char, double>();
+        private Dictionary<string, double> shiftscores = new Dictionary<string, double>();
 
-        private String EncryptedText;
-
-        public string EncryptedText1
+        public FrequencyAnalysis(Dictionary<String, String> cipher)
         {
-            get
-            {
-                return EncryptedText;
-            }
-
-            set
-            {
-                EncryptedText = value;
-            }
-        }
-
-        public FrequencyAnalysis(String EncryptedText)
-        {
-            this.EncryptedText = EncryptedText;
-            CountCharacters();
+            PopulateFrequencyTable();
+            generateScore(cipher);
         }
 
         private void PopulateFrequencyTable()
@@ -62,8 +47,36 @@ namespace Decrypt
             FrequencyTable.Add('z', 0.074);
         }
 
-        private void CountCharacters()
+        private void generateScore(Dictionary<String, String> cipher)
         {
+            //loop for each decrypted string
+            for (int index = 0; index < cipher.Count; index++)
+            {
+                KeyValuePair<String, String> item = cipher.ElementAt(index);
+                String shift = item.Key;
+                String decrypted = item.Value;
+                Dictionary<Char, int> Count = CountCharacters(decrypted);
+                //generate score for this decrypted text
+                double score = 0;
+                for (int i = 0; i < Count.Count; i++)
+                {
+                    score = 0;
+                    KeyValuePair<Char, int> chartercount = Count.ElementAt(i);
+                    char c = chartercount.Key;
+                    int decryptPercentage = chartercount.Value;
+                    double percentage = FrequencyTable[c];
+                    score = score + (percentage + decryptPercentage);
+                }
+                shiftscores.Add(shift, score);
+                Program.writeToConsole("\n HIGHEST count is" + shift+" "+score);
+            }
+            shiftscores = shiftscores.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value); ;
+            Program.writeToConsole("\n HIGHEST count is"+ shiftscores.ElementAt(shiftscores.Count-1));
+        }
+
+        private Dictionary<Char, int> CountCharacters(string EncryptedText)
+        {
+            Dictionary<Char, int> CharacterCount = new Dictionary<Char, int>();
             double NumberOfCharacter = 0.00;
             foreach (char c in EncryptedText.ToLowerInvariant())
             {
@@ -82,6 +95,8 @@ namespace Decrypt
                     }
                 }
             }
+            return CharacterCount;
+            /*
             CharacterCount = CharacterCount.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value); ;
             for (int index = 0; index < CharacterCount.Count; index++)
             {
@@ -95,39 +110,7 @@ namespace Decrypt
                 var amountValue = amount.Value;
                 Program.writeToConsole("  " + itemKey + " should be " + amountKey + "\n");
             }
-        }
-
-        private void newCount()
-        {
-
-            // 1.
-            // Array to store frequencies.
-            List<int> list = new List<int>();
-            int[] c = new int[123];
-
-            // 2.
-            // Read entire text file.
-            string s = EncryptedText.ToLowerInvariant();
-
-            // 3.
-            // Iterate over each character.
-            foreach (char t in s)
-            {
-                if (t >= 97 && t <= 122)
-                {
-                    // Increment table.
-                    c[(int)t]++;
-                }
-            }
-
-            // 4.
-            // Write all letters found.
-            //Array.Sort(c);
-            for (int i = 97; i < 122; i++)
-            {
-                char ss = (char)i;
-               Console.Write("Letter: " + ss + "Frequency:" + c[i]);
-            }
+            */
         }
     }
 }

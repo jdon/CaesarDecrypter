@@ -10,10 +10,13 @@ namespace Decrypt
 {
     class Decrypter
     {
+
         public Decrypter()
         {
 
         }
+
+        private Dictionary<String, String> AffineCiphers = new Dictionary<String, String>();
 
         public string DecryptAffine(String EncryptedText)
         {
@@ -25,18 +28,22 @@ namespace Decrypt
                 {
                     for (int b = 0; b < 26; b++)
                     {
-                        Loop = Loop + shiftaffine(EncryptedText,a,b);
+                        String DecryptedText = "\n\nCurrent shift: a " + a + " b " + b + "\n\n";
+                        String decrypted = shiftaffine(EncryptedText, a, b);
+                        AffineCiphers.Add("A value:"+a+"B value"+b,decrypted);
+                        Loop = Loop + DecryptedText + decrypted;
                     }
 
                 }
             }
             Program.writeToConsole(Loop);
+            new FrequencyAnalysis(AffineCiphers);
             return Loop;
         }
 
         private string shiftaffine(String EncryptedText, int a, int b)
         {
-            String DecryptedText = "\n\nCurrent shift: a " + a + " b "+b+"\n\n";
+            String DecryptedText = "";
             foreach (char c in EncryptedText.ToLowerInvariant())
             {
                 int AsciiCode = (int)c;
