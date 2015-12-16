@@ -38,12 +38,16 @@
             this.runToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.caesarCipherToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.alllShiftsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userSelectedShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedCipherToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.encryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.caesarCipherToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedCipherToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allShiftsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userInputtedShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +68,7 @@
             this.TextOutput.Size = new System.Drawing.Size(379, 547);
             this.TextOutput.TabIndex = 2;
             this.TextOutput.Text = "";
-            this.TextOutput.TextChanged += new System.EventHandler(this.TextOutput_TextChanged);
+            this.TextOutput.TextChanged += new System.EventHandler(this.TextBoxTextChangedEvent);
             // 
             // menuStrip1
             // 
@@ -92,7 +96,7 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenFile);
             // 
             // saveToolStripMenuItem
             // 
@@ -102,21 +106,20 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // decryptedTextToolStripMenuItem
             // 
             this.decryptedTextToolStripMenuItem.Name = "decryptedTextToolStripMenuItem";
             this.decryptedTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.decryptedTextToolStripMenuItem.Text = "Decrypted Text";
-            this.decryptedTextToolStripMenuItem.Click += new System.EventHandler(this.decryptedTextToolStripMenuItem_Click);
+            this.decryptedTextToolStripMenuItem.Click += new System.EventHandler(this.SaveDecryptedText);
             // 
             // encryptedTextToolStripMenuItem
             // 
             this.encryptedTextToolStripMenuItem.Name = "encryptedTextToolStripMenuItem";
             this.encryptedTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.encryptedTextToolStripMenuItem.Text = "Encrypted Text";
-            this.encryptedTextToolStripMenuItem.Click += new System.EventHandler(this.encryptedTextToolStripMenuItem_Click);
+            this.encryptedTextToolStripMenuItem.Click += new System.EventHandler(this.SaveEncryptedText);
             // 
             // runToolStripMenuItem1
             // 
@@ -138,17 +141,35 @@
             // 
             // caesarCipherToolStripMenuItem1
             // 
+            this.caesarCipherToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alllShiftsToolStripMenuItem,
+            this.userSelectedShiftToolStripMenuItem});
             this.caesarCipherToolStripMenuItem1.Name = "caesarCipherToolStripMenuItem1";
             this.caesarCipherToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
             this.caesarCipherToolStripMenuItem1.Text = "Caesar Cipher";
-            this.caesarCipherToolStripMenuItem1.Click += new System.EventHandler(this.caesarCipherToolStripMenuItem1_Click);
+            // 
+            // alllShiftsToolStripMenuItem
+            // 
+            this.alllShiftsToolStripMenuItem.Name = "alllShiftsToolStripMenuItem";
+            this.alllShiftsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.alllShiftsToolStripMenuItem.Text = "All Shifts";
+            this.alllShiftsToolStripMenuItem.Click += new System.EventHandler(this.AllCeaserCipherShiftsDecryption);
+            // 
+            // userSelectedShiftToolStripMenuItem
+            // 
+            this.userSelectedShiftToolStripMenuItem.Name = "userSelectedShiftToolStripMenuItem";
+            this.userSelectedShiftToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.userSelectedShiftToolStripMenuItem.Text = "User Selected Shift";
+            this.userSelectedShiftToolStripMenuItem.Click += new System.EventHandler(this.UserSelectedCeaserCipeherDecryption);
             // 
             // advancedCipherToolStripMenuItem1
             // 
+            this.advancedCipherToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.allShiftsToolStripMenuItem,
+            this.userInputtedShiftToolStripMenuItem});
             this.advancedCipherToolStripMenuItem1.Name = "advancedCipherToolStripMenuItem1";
             this.advancedCipherToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
             this.advancedCipherToolStripMenuItem1.Text = "Advanced Cipher ";
-            this.advancedCipherToolStripMenuItem1.Click += new System.EventHandler(this.advancedCipherToolStripMenuItem1_Click);
             // 
             // encryptToolStripMenuItem
             // 
@@ -164,14 +185,14 @@
             this.caesarCipherToolStripMenuItem2.Name = "caesarCipherToolStripMenuItem2";
             this.caesarCipherToolStripMenuItem2.Size = new System.Drawing.Size(168, 22);
             this.caesarCipherToolStripMenuItem2.Text = "Caesar Cipher ";
-            this.caesarCipherToolStripMenuItem2.Click += new System.EventHandler(this.caesarCipherToolStripMenuItem2_Click);
+            this.caesarCipherToolStripMenuItem2.Click += new System.EventHandler(this.EncryptCaesarCipherButton);
             // 
             // advancedCipherToolStripMenuItem2
             // 
             this.advancedCipherToolStripMenuItem2.Name = "advancedCipherToolStripMenuItem2";
             this.advancedCipherToolStripMenuItem2.Size = new System.Drawing.Size(168, 22);
             this.advancedCipherToolStripMenuItem2.Text = "Advanced Cipher ";
-            this.advancedCipherToolStripMenuItem2.Click += new System.EventHandler(this.advancedCipherToolStripMenuItem2_Click);
+            this.advancedCipherToolStripMenuItem2.Click += new System.EventHandler(this.EncryptAffineCipherButton);
             // 
             // editToolStripMenuItem
             // 
@@ -186,7 +207,21 @@
             this.clearConsoleToolStripMenuItem.Name = "clearConsoleToolStripMenuItem";
             this.clearConsoleToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.clearConsoleToolStripMenuItem.Text = "Clear Console";
-            this.clearConsoleToolStripMenuItem.Click += new System.EventHandler(this.clearConsoleToolStripMenuItem_Click);
+            this.clearConsoleToolStripMenuItem.Click += new System.EventHandler(this.ClearConsole);
+            // 
+            // allShiftsToolStripMenuItem
+            // 
+            this.allShiftsToolStripMenuItem.Name = "allShiftsToolStripMenuItem";
+            this.allShiftsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.allShiftsToolStripMenuItem.Text = "All shifts";
+            this.allShiftsToolStripMenuItem.Click += new System.EventHandler(this.AllAffineCipherShiftsDecryption);
+            // 
+            // userInputtedShiftToolStripMenuItem
+            // 
+            this.userInputtedShiftToolStripMenuItem.Name = "userInputtedShiftToolStripMenuItem";
+            this.userInputtedShiftToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.userInputtedShiftToolStripMenuItem.Text = "User Selected Shift";
+            this.userInputtedShiftToolStripMenuItem.Click += new System.EventHandler(this.UserSelectedAffineCipherDecyption);
             // 
             // Gui
             // 
@@ -221,6 +256,10 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decryptedTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem encryptedTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alllShiftsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem userSelectedShiftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem allShiftsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem userInputtedShiftToolStripMenuItem;
     }
 }
 

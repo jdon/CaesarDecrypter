@@ -11,10 +11,10 @@ namespace Decrypt
         private Dictionary<char, double> FrequencyTable = new Dictionary<char, double>();
         private Dictionary<string, double> shiftscores = new Dictionary<string, double>();
 
-        public FrequencyAnalysis(Dictionary<String, String> cipher)
+        public FrequencyAnalysis(Dictionary<String, String> cipher,String encryptedText)
         {
             PopulateFrequencyTable();
-            generateScore(cipher);
+            generateScore(cipher, encryptedText);
         }
 
         private void PopulateFrequencyTable()
@@ -47,7 +47,7 @@ namespace Decrypt
             FrequencyTable.Add('z', 0.074);
         }
 
-        private void generateScore(Dictionary<String, String> cipher)
+        private void generateScore(Dictionary<String, String> cipher,String encryptedText)
         {
             //loop for each decrypted string
             for (int index = 0; index < cipher.Count; index++)
@@ -63,9 +63,10 @@ namespace Decrypt
                     score = 0;
                     KeyValuePair<Char, int> chartercount = Count.ElementAt(i);
                     char c = chartercount.Key;
-                    int decryptPercentage = chartercount.Value;
+                    int decryptPercentage = (chartercount.Value/ encryptedText.Length)*100;
                     double percentage = FrequencyTable[c];
-                    score = score + (percentage + decryptPercentage);
+                    score += Math.Abs(decryptPercentage - percentage);
+                    //Program.writeToConsole(decryptPercentage + "\n");
                 }
                 shiftscores.Add(shift, score);
                 Program.writeToConsole("\n HIGHEST count is" + shift+" "+score);

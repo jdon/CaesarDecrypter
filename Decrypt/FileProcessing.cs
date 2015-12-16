@@ -31,7 +31,7 @@ namespace Decrypt
                 Program.writeToConsole(FileLocation);
                 //write the output to the output location selected
                 File.WriteAllText(FileLocation+"/DecryptedText.txt", DecryptedText);
-                MessageBox.Show("File saved to "+ FileLocation + "\\output.txt", "File Saved Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("File saved to "+ FileLocation + "\\DecryptedText.txt", "File Saved Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception e)
             {
@@ -45,8 +45,8 @@ namespace Decrypt
             {
                 Program.writeToConsole(FileLocation);
                 //write the output to the output location selected
-                File.WriteAllText(FileLocation + "/DecryptedText.txt", DecryptedText);
-                MessageBox.Show("File saved to " + FileLocation + "\\output.txt", "File Saved Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                File.WriteAllText(FileLocation + "/EncryptedText.txt", DecryptedText);
+                MessageBox.Show("File saved to " + FileLocation + "\\EncryptedText.txt", "File Saved Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception e)
             {

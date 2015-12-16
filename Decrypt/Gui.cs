@@ -31,54 +31,31 @@ namespace Decrypt
         {
             return TextOutput;
         }
-
-        public void EncryptText(int shift)
-        {
-            EncryptedText = Encrypt.EncryptCaesar(TextInput, shift);
-        }
-
-        public void EncryptAfine(int a, int b)
-        {
-            // Save encryptedtext
-            String text = FileProcess.ReadTextFile(Dialog.FileName);
-            EncryptedText = Encrypt.encryptAffine(text, a, b);
-        }
         //            //
         // Gui Events //
         //            //
 
-        private void TextOutput_TextChanged(object sender, EventArgs e) //called when text is output to textbox on screen
+        private void TextBoxTextChangedEvent(object sender, EventArgs e) //called when text is output to textbox on screen
         {
             TextOutput.SelectionStart = TextOutput.Text.Length; //set the current caret position at the end
             TextOutput.ScrollToCaret(); //scroll to it automatically
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e) //called when selecting "File" then "Open" on the strip menu
+        private void OpenFile(object sender, EventArgs e) //called when selecting "File" then "Open" on the strip menu
         {
             Dialog.Filter = "Text files|*.txt"; // show only text files
-            Dialog.ShowDialog(); //Show the File Dialog
-            TextOutput.AppendText("Input File: \n" + Dialog.FileName+ "\n"); //output the filelocation to the screen
-            TextInput = FileProcess.ReadTextFile(Dialog.FileName); // set the input tex
+            if (Dialog.ShowDialog().Equals(DialogResult.OK))
+            {
+                Program.writeToConsole("Input File: \n" + Dialog.FileName + "\n"); //output the filelocation to the screen
+                TextInput = FileProcess.ReadTextFile(Dialog.FileName); // set the input text
+            }
         }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) //called when selecting "File" then "Save" on the strip menu
-        {
-            FolderDialog.ShowDialog();//Show the File Dialog
-            TextOutput.AppendText("\n Output Location: \n" + FolderDialog.SelectedPath + "\n"); //output the filelocation to the screen
-        }
-
-        private void clearConsoleToolStripMenuItem_Click(object sender, EventArgs e) //called when selecting "Edit" then "Clear Console" on the strip menu
+        private void ClearConsole(object sender, EventArgs e) //called when selecting "Edit" then "Clear Console" on the strip menu
         {
             TextOutput.Clear(); //Clear the text box on screen
         }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveDecryptedText(object sender, EventArgs e) //called when selecting "save" then "decryptedtext" on the strip menu
         {
-            
-        }
-        private void decryptedTextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Save decryptedtext
             if (DecryptedText != null)
             {
                 if (FolderDialog.ShowDialog().Equals(DialogResult.OK))
@@ -86,11 +63,14 @@ namespace Decrypt
                     FileProcess.WriteDecryptedFile(DecryptedText, FolderDialog.SelectedPath);
                 }
             }
+            else
+            {
+                MessageBox.Show("You don't have any decrypted text to save", "No Decrypted Text", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void encryptedTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveEncryptedText(object sender, EventArgs e) //called when selecting "save" then "encryptedtext" on the strip menu
         {
-            // Save encryptedtext
             if (EncryptedText != null)
             {
                 if (FolderDialog.ShowDialog().Equals(DialogResult.OK))
@@ -98,9 +78,13 @@ namespace Decrypt
                     FileProcess.WriteEncryptedFile(EncryptedText, FolderDialog.SelectedPath);
                 }
             }
+            else
+            {
+                MessageBox.Show("You don't have any Encrypted text to save", "No Encrypted Text", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void caesarCipherToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void DecryptedCaesarCipherButton(object sender, EventArgs e)
         {
             if (Dialog.FileName == "")
             {
@@ -108,15 +92,19 @@ namespace Decrypt
                 return;
             }
             DecryptedText = Decrypt.DecryptCaesar(TextInput);
-            //FrequencyAnalysis f = new FrequencyAnalysis(DecryptedText);
         }
 
-        private void advancedCipherToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void DecryptAffineCipherButton(object sender, EventArgs e)
         {
-            Decrypt.DecryptAffine(TextInput);
+            if (Dialog.FileName == "")
+            {
+                MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DecryptedText = Decrypt.DecryptAffine(TextInput);
         }
 
-        private void caesarCipherToolStripMenuItem2_Click(object sender, EventArgs e)
+        private void EncryptCaesarCipherButton(object sender, EventArgs e)
         {
             if (Dialog.FileName == "")
             {
@@ -124,11 +112,16 @@ namespace Decrypt
                 return;
             }
             InputDialog input = new InputDialog();
-            input.Show();
+            if (input.ShowDialog().Equals(DialogResult.OK))
+            {
+                EncryptedText = Encrypt.EncryptCaesar(TextInput, input.Shift);
+            }
+
         }
 
-        private void advancedCipherToolStripMenuItem2_Click(object sender, EventArgs e)
+        private void EncryptAffineCipherButton(object sender, EventArgs e)
         {
+
             //encrypt affine cipher open gui
             if (Dialog.FileName == "")
             {
@@ -136,7 +129,62 @@ namespace Decrypt
                 return;
             }
             AffineCipherInput input = new AffineCipherInput();
-            input.Show();
+            if (input.ShowDialog().Equals(DialogResult.OK))
+            {
+                // TODO Improve output
+                EncryptedText = Encrypt.encryptAffine(TextInput, input.A, input.B);
+            }
+        }
+
+        private void AllCeaserCipherShiftsDecryption(object sender, EventArgs e)
+        {
+            if (Dialog.FileName == "")
+            {
+                MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DecryptedText = Decrypt.DecryptCaesar(TextInput);
+        }
+
+        private void UserSelectedCeaserCipeherDecryption(object sender, EventArgs e)
+        {
+            if (Dialog.FileName == "")
+            {
+                MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            InputDialog input = new InputDialog();
+            if (input.ShowDialog().Equals(DialogResult.OK))
+            {
+                EncryptedText = Decrypt.DecryptCaesar(TextInput, input.Shift);
+            }
+        }
+
+        private void AllAffineCipherShiftsDecryption(object sender, EventArgs e)
+        {
+            if (Dialog.FileName == "")
+            {
+                MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DecryptedText = Decrypt.DecryptAffine(TextInput);
+        }
+
+        private void UserSelectedAffineCipherDecyption(object sender, EventArgs e)
+        {
+
+            //encrypt affine cipher open gui
+            if (Dialog.FileName == "")
+            {
+                MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            AffineCipherInput input = new AffineCipherInput();
+            if (input.ShowDialog().Equals(DialogResult.OK))
+            {
+                // TODO Improve output
+                DecryptedText = Decrypt.DecryptAffine(TextInput, input.A, input.B);
+            }
         }
     }
 }
