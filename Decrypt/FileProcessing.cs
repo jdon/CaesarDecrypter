@@ -10,11 +10,11 @@ namespace Decrypt
 {
     class FileProcessing
     {
-        public String ReadTextFile(String FileLocation)
+        public String ReadTextFile(String FileLocation) // method for reading the text files
         {
             try
             {
-                return File.ReadAllText(FileLocation);
+                return File.ReadAllText(FileLocation, Encoding.GetEncoding("Windows-1255")); // reads the text file at the location specified by the user
             }
             catch (Exception e)
             {

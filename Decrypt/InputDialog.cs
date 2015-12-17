@@ -19,6 +19,7 @@ namespace Decrypt
         }
         public int Shift
         {
+            //getters and setters for the public variable
             get
             {
                 return shift;
@@ -36,7 +37,7 @@ namespace Decrypt
             {
                 shift = int.Parse(MaskedTextBox.Text);// parse the text in the masked textbox
                 this.DialogResult = DialogResult.OK; // set the dialogresults as "ok", so this can be used to make sure that a valid input has been given
-                this.Close();// close the input dialog since the 
+                this.Close();// close the input dialog since the they have succesfully inputted valid data
             }
             else
             {

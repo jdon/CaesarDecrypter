@@ -18,11 +18,11 @@ namespace Decrypt
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            m = new Gui();
-            Application.Run(m);
+            m = new Gui(); // creates the main gui
+            Application.Run(m);// starts the main gui
         }
 
-        public static void writeToConsole(String text)
+        public static void writeToConsole(String text) // prints to the black textbox on screen
         {
             m.getTextBox().AppendText(text);
         }
@@ -32,7 +32,7 @@ namespace Decrypt
             return m;
         }
 
-        public static bool isCoPrime(int a)
+        public static bool isCoPrime(int a) // uses euclidean algorithm to determine the coprime integers of 26
         {
             int b = 26;
             while (a != 0 && b != 0)

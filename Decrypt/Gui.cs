@@ -31,6 +31,30 @@ namespace Decrypt
         {
             return TextOutput;
         }
+
+        private String CaesarArrayToString(String[] shifts) // chanes the the array of shifts to a string
+        {
+            String allshifts = "";
+            for (int i = 1; i <= 26; i++)// loops through each shift
+            {
+                allshifts += "\nCurrent Shift: "+i+"\n"+shifts[i];
+            }
+            return allshifts;
+        }
+
+        private String AffineCipherDictionaryToString(Dictionary<String, String> AffineShifts)// changes the dictionary of affine ciphers toa string
+        {
+            String allshifts = "";
+            for (int index = 0; index < AffineShifts.Count; index++) // loops through each shift
+            {
+                KeyValuePair<String, String> item = AffineShifts.ElementAt(index);
+                String shift = item.Key;
+                String decrypted = item.Value;
+                allshifts += "\n" + shift + "\n" + decrypted;
+            }
+            return allshifts;
+        }
+
         //            //
         // Gui Events //
         //            //
@@ -54,11 +78,11 @@ namespace Decrypt
         {
             TextOutput.Clear(); //Clear the text box on screen
         }
-        private void SaveDecryptedText(object sender, EventArgs e) //called when selecting "save" then "decryptedtext" on the strip menu
+        private void SaveDecryptedText(object sender, EventArgs e) //called when selecting "file" then "save" then "decryptedtext" on the strip menu
         {
             if (DecryptedText != null)
             {
-                if (FolderDialog.ShowDialog().Equals(DialogResult.OK))
+                if (FolderDialog.ShowDialog().Equals(DialogResult.OK)) // creates a folder dialog for the user to select where to save the decrypted text
                 {
                     FileProcess.WriteDecryptedFile(DecryptedText, FolderDialog.SelectedPath);
                 }
@@ -69,11 +93,11 @@ namespace Decrypt
             }
         }
 
-        private void SaveEncryptedText(object sender, EventArgs e) //called when selecting "save" then "encryptedtext" on the strip menu
+        private void SaveEncryptedText(object sender, EventArgs e) //called when selecting "file" then "save" then "encryptedtext" on the strip menu
         {
             if (EncryptedText != null)
             {
-                if (FolderDialog.ShowDialog().Equals(DialogResult.OK))
+                if (FolderDialog.ShowDialog().Equals(DialogResult.OK))// creates a folder dialog for the user to select where to save the encrypted text
                 {
                     FileProcess.WriteEncryptedFile(EncryptedText, FolderDialog.SelectedPath);
                 }
@@ -83,107 +107,80 @@ namespace Decrypt
                 MessageBox.Show("You don't have any Encrypted text to save", "No Encrypted Text", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void DecryptedCaesarCipherButton(object sender, EventArgs e)
+        private void EncryptCaesarCipherButton(object sender, EventArgs e)//called when selecting "run" then "encrypt" then "Ceasar Cipher" on the strip menu
         {
             if (Dialog.FileName == "")
             {
                 MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            DecryptedText = Decrypt.DecryptCaesar(TextInput);
-        }
-
-        private void DecryptAffineCipherButton(object sender, EventArgs e)
-        {
-            if (Dialog.FileName == "")
+            InputDialog input = new InputDialog(); // creates an input for the user to input their desired shift
+            if (input.ShowDialog().Equals(DialogResult.OK))// makes sure the inputted results are valid
             {
-                MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            DecryptedText = Decrypt.DecryptAffine(TextInput);
-        }
-
-        private void EncryptCaesarCipherButton(object sender, EventArgs e)
-        {
-            if (Dialog.FileName == "")
-            {
-                MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            InputDialog input = new InputDialog();
-            if (input.ShowDialog().Equals(DialogResult.OK))
-            {
-                EncryptedText = Encrypt.EncryptCaesar(TextInput, input.Shift);
+                EncryptedText = Encrypt.EncryptCaesar(TextInput, input.Shift);// pefroms the encryption and sets the global variable as the encrypted tex
             }
 
         }
 
-        private void EncryptAffineCipherButton(object sender, EventArgs e)
+        private void EncryptAffineCipherButton(object sender, EventArgs e)//called when selecting "run" then "encrypt" then "Advanced Cipher" on the strip menu
         {
-
-            //encrypt affine cipher open gui
             if (Dialog.FileName == "")
             {
                 MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            AffineCipherInput input = new AffineCipherInput();
-            if (input.ShowDialog().Equals(DialogResult.OK))
+            AffineCipherInput input = new AffineCipherInput();// creates an input for the user to input their desired shift
+            if (input.ShowDialog().Equals(DialogResult.OK))// makes sure the inputted results are valid
             {
-                // TODO Improve output
-                EncryptedText = Encrypt.encryptAffine(TextInput, input.A, input.B);
+                EncryptedText = Encrypt.encryptAffine(TextInput, input.A, input.B); // pefroms the encryption and sets the global variable as the encrypted text
             }
         }
 
-        private void AllCeaserCipherShiftsDecryption(object sender, EventArgs e)
+        private void AllCeaserCipherShiftsDecryption(object sender, EventArgs e)//called when selecting "run" then "decrypt" then "Ceasar Cipher" then "all shifts" on the strip menu
         {
             if (Dialog.FileName == "")
             {
                 MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            DecryptedText = Decrypt.DecryptCaesar(TextInput);
+            DecryptedText = CaesarArrayToString(Decrypt.DecryptCaesar(TextInput));// pefroms the decryption and sets the global variable as the decrypted text
         }
 
-        private void UserSelectedCeaserCipeherDecryption(object sender, EventArgs e)
+        private void UserSelectedCeaserCipeherDecryption(object sender, EventArgs e)//called when selecting "run" then "decrypt" then "Ceasar Cipher" then "user selected" on the strip menu
         {
             if (Dialog.FileName == "")
             {
                 MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            InputDialog input = new InputDialog();
-            if (input.ShowDialog().Equals(DialogResult.OK))
+            InputDialog input = new InputDialog();// creates an input for the user to input their desired shift
+            if (input.ShowDialog().Equals(DialogResult.OK)) // makes sure the inputted results are valid
             {
-                EncryptedText = Decrypt.DecryptCaesar(TextInput, input.Shift);
+                DecryptedText = Decrypt.DecryptCaesar(TextInput, input.Shift); // pefroms the decryption and sets the global variable as the decrypted text
             }
         }
 
-        private void AllAffineCipherShiftsDecryption(object sender, EventArgs e)
+        private void AllAffineCipherShiftsDecryption(object sender, EventArgs e)//called when selecting "run" then "decrypt" then "advanced Cipher" then "all shifts" on the strip menu
         {
             if (Dialog.FileName == "")
             {
                 MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            DecryptedText = Decrypt.DecryptAffine(TextInput);
+            DecryptedText = AffineCipherDictionaryToString(Decrypt.DecryptAffine(TextInput));// pefroms the decryption and sets the global variable as the decrypted text
         }
 
-        private void UserSelectedAffineCipherDecyption(object sender, EventArgs e)
+        private void UserSelectedAffineCipherDecyption(object sender, EventArgs e)//called when selecting "run" then "decrypt" then "advanced Cipher" then "user selected" on the strip menu
         {
-
-            //encrypt affine cipher open gui
             if (Dialog.FileName == "")
             {
                 MessageBox.Show("Please select a valid text file", "Text file not selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            AffineCipherInput input = new AffineCipherInput();
-            if (input.ShowDialog().Equals(DialogResult.OK))
+            AffineCipherInput input = new AffineCipherInput();// creates an input for the user to input their desired shift
+            if (input.ShowDialog().Equals(DialogResult.OK))// makes sure the inputted results are valid
             {
-                // TODO Improve output
-                DecryptedText = Decrypt.DecryptAffine(TextInput, input.A, input.B);
+                DecryptedText = Decrypt.DecryptAffine(TextInput, input.A, input.B);// pefroms the decryption and sets the global variable as the decrypted text
             }
         }
     }

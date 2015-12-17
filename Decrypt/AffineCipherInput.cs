@@ -20,7 +20,7 @@ namespace Decrypt
         {
             InitializeComponent();
         }
-
+        //getters and setters for the public variables
         public int A
         {
             get
@@ -33,7 +33,7 @@ namespace Decrypt
                 a = value;
             }
         }
-
+        //getters and setters for the public variables
         public int B
         {
             get

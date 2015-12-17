@@ -16,10 +16,9 @@ namespace Decrypt
 
         }
 
-        public string DecryptAffine(String EncryptedText) //DecryptAffine for all possible shifts
+        public Dictionary<String, String> DecryptAffine(String EncryptedText) //DecryptAffine for all possible shifts
         {
-            Dictionary<String, String> AffineCiphers = new Dictionary<String, String>();// First string in the dictionary is the shift and the second string is the shifted text
-            String Loop = " ";
+            Dictionary<String, String> Loop = new Dictionary<String, String>();// First string in the dictionary is the shift and the second string is the shifted text
             for (int a = 0; a < 26; a++)//loop throught all possible shifts
             {
                 if (Program.isCoPrime(a)) // only loop through the shifts if the a value is a coprime of 26
@@ -28,14 +27,13 @@ namespace Decrypt
                     {
                         String DecryptedText = "\n\nShift:A value:" + a + " B value:" + b + "\n";
                         String decrypted = shiftaffine(EncryptedText, a, b); // shift the encrypted text
-                        AffineCiphers.Add("A value:"+a+" B value:"+b,decrypted); // add the values to the dictionary
-                        Loop = Loop + DecryptedText + decrypted; // add the newly shifted text to the rest of the different shifts
+                        Loop.Add("A value:"+a+" B value:"+b,decrypted); // add the values to the dictionary
+                        Program.writeToConsole("\nA value:" + a + " B value:" + b +"\n"+ decrypted);// outputshifts to the console on screen
                     }
 
                 }
             }
-            Program.writeToConsole(Loop); // output all shifts to the console on screen
-            new FrequencyAnalysis(AffineCiphers, EncryptedText);
+            //new FrequencyAnalysis(AffineCiphers, EncryptedText);
             return Loop; // return all the shifts
         }
         public string DecryptAffine(String EncryptedText,int a,int b)//DecryptAffine for the user inputed shift
@@ -63,24 +61,28 @@ namespace Decrypt
             return DecryptedText; // return the decrypted text
         }
 
-        public String DecryptCaesar(String EncryptedText)//DecryptCaesar for all possible shifts
+        public String[] DecryptCaesar(String EncryptedText)//DecryptCaesar for all possible shifts
         {
-            String Loop =" ";
+            String[] Loop = new String[27]; // array of all the different shifts
             for (int i = 1; i <= 26; i++) //loop throught all possible 26 shifts
             {
-                Loop = Loop + ShiftText(EncryptedText, i);// add the newly shifted text to the rest of the different shifts
+                String decryptedText = ShiftText(EncryptedText, i); // perform the shift
+                Loop[i] = decryptedText;// add the newly shifted text to the rest of the different shifts
+                Program.writeToConsole("\n\nShift:" + i+ "\n\n" + decryptedText);// output shift to the console on screen
             }
             return Loop;
         }
 
         public String DecryptCaesar(String EncryptedText, int shift) //DecryptCaesar for the user inputed shift
         {
-            return ShiftText(EncryptedText, shift);// shift the encrypted text and return it.
+            String decryptedText = ShiftText(EncryptedText, shift);
+            Program.writeToConsole("\n\nShift:" + shift + "\n\n" + decryptedText);
+            return decryptedText;// shift the encrypted text and return it.
         }
 
         private String ShiftText(String EncryptedText,int Shift) //method for shifting Caesar cipher 
         {
-            String DecryptedText ="\n\nShift:"+Shift+"\n\n";
+            String DecryptedText ="";
             foreach (char c in EncryptedText.ToLowerInvariant()) // loop through each character in the encryptedText
             {
                 int AsciiCode = (int)c;// change the character to an asciicode
@@ -92,11 +94,14 @@ namespace Decrypt
                         int NewShiftAmount = AsciiCode - 122; // work out what the amount should be added to A
                         AsciiCode = 96 + NewShiftAmount; // add the newly worked out shift to the asciicode
                     }
+                    Char NewCharacter = (char)AsciiCode; // transform asciicode to character
+                    DecryptedText = DecryptedText + NewCharacter; // add the newly shifted text to the rest of the different shifts
                 }
-                Char NewCharacter = (char)AsciiCode; // transform asciicode to character
-                DecryptedText = DecryptedText + NewCharacter; // add the newly shifted text to the rest of the different shifts
+                else
+                {
+                    DecryptedText = DecryptedText + c;
+                }
             }
-            Program.writeToConsole(DecryptedText); //show output to TextBox on gui
             return DecryptedText; // return all the shifts
         }
     }
